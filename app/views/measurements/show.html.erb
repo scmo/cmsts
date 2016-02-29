@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Station:</strong>
+  <%= @measurement.station %>
+</p>
+
+<p>
+  <strong>Valuetype:</strong>
+  <%= @measurement.valueType %>
+</p>
+
+<p>
+  <strong>Measuredat:</strong>
+  <%= @measurement.measuredAt %>
+</p>
+
+<p>
+  <strong>Measuredvalue:</strong>
+  <%= @measurement.measuredValue %>
+</p>
+
+<p>
+  <strong>Active:</strong>
+  <%= @measurement.active %>
+</p>
+
+<%= link_to 'Edit', edit_measurement_path(@measurement) %> |
+<%= link_to 'Back', measurements_path %>
