@@ -1,6 +1,5 @@
 class MeasurementsController < ApplicationController
   before_action :set_measurement, only: [:show, :edit, :update, :destroy]
-  skip_before_filter :verify_authenticity_token, :only => [:update]
 
   # GET /measurements
   # GET /measurements.json
@@ -34,7 +33,7 @@ class MeasurementsController < ApplicationController
       end
     end
     # @measurements = Measurement.all
-    @measurements = Measurement.where(:station_id => 2, :value_type_id => 1).order(:measured_at)
+    @measurements = Measurement.order(:measured_at).limit(10)
   end
 
   # GET /measurements/1

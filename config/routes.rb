@@ -1,8 +1,16 @@
 Rails.application.routes.draw do
-  resources :measurements
+  namespace :api, constraints: { format: 'json' } do
+    namespace :v1 do
+      get 'measurements/station/:station_id/value_type/:value_type_id(/start/:start/end/:end)',  to: 'measurements#show', format: 'json'
+    end
+  end
+
+
   resources :measurements
   resources :value_types
   resources :stations
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

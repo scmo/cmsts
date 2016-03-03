@@ -1,2 +1,42 @@
 <h1>Timeline</h1>
 
+<%= link_to 'Stations', stations_path() %>
+<%= link_to 'Measurements (only 10)', measurements_path() %>
+<%= link_to 'Value Types', value_types_path() %>
+
+
+<div class="row">
+  <div class="col-md-6">
+    <% @stations.each do |station| %>
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" value="" class="station-checkbox" data-station="<%= station.id %>"><%= station.name %>
+        </label>
+      </div>
+      <div id="station-<%= station.id %>-value_types" class="col-sm-offset-1" style="display:none" >
+        <% station.value_types.each do |value_type| %>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="" class="value_type-checkbox" data-station="<%= station.id %>" data-station-name="<%= station.name %>" data-value_type="<%= value_type.id %>" data-value_type-unit="<%= value_type.unit %>" data-value_type-name="<%= value_type.name %>"><%= value_type.name %>
+            </label>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-md-6">
+    <div class="form-inline">
+      <div class="form-group">
+        <label for="startDate">From</label>
+        <input type="date" class="form-control" id="startDate" value="2014-01-01" min="2000-01-01" max="2015-12-30">
+      </div>
+      <div class="form-group">
+        <label for="endDate">To</label>
+        <input type="date" class="form-control" id="endDate" value="2014-12-31" min="2000-01-02" max="2015-12-31">
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr>
+<div id="chart-container" style="height: 400px; min-width: 310px"></div>

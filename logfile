@@ -1,0 +1,203 @@
+LOG:  database system was shut down at 2016-03-01 15:35:50 CET
+LOG:  MultiXact member wraparound protections are now enabled
+LOG:  database system is ready to accept connections
+LOG:  autovacuum launcher started
+ERROR:  must be superuser to signal the postmaster
+STATEMENT:  select pg_reload_conf()
+ERROR:  must be owner of database test
+STATEMENT:  DROP DATABASE test;
+ERROR:  must be owner of extension plpgsql
+STATEMENT:  COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+	
+	
+	
+WARNING:  no privileges could be revoked for "public"
+WARNING:  no privileges could be revoked for "public"
+WARNING:  no privileges were granted for "public"
+WARNING:  no privileges were granted for "public"
+ERROR:  must be owner of extension plpgsql
+STATEMENT:  COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+	
+	
+	
+ERROR:  relation "measurements" already exists
+STATEMENT:  CREATE TABLE measurements (
+	    id bigint NOT NULL,
+	    station_id integer NOT NULL,
+	    value_type_id integer NOT NULL,
+	    measured_at timestamp without time zone NOT NULL,
+	    measured_value double precision NOT NULL,
+	    active boolean DEFAULT true
+	);
+	
+	
+	
+ERROR:  relation "measurements_id_seq" already exists
+STATEMENT:  CREATE SEQUENCE measurements_id_seq
+	    START WITH 1
+	    INCREMENT BY 1
+	    NO MINVALUE
+	    NO MAXVALUE
+	    CACHE 1;
+	
+	
+	
+ERROR:  relation "schema_migrations" already exists
+STATEMENT:  CREATE TABLE schema_migrations (
+	    version character varying NOT NULL
+	);
+	
+	
+	
+ERROR:  relation "stations" already exists
+STATEMENT:  CREATE TABLE stations (
+	    id integer NOT NULL,
+	    name text NOT NULL,
+	    details text,
+	    location text
+	);
+	
+	
+	
+ERROR:  relation "stations_id_seq" already exists
+STATEMENT:  CREATE SEQUENCE stations_id_seq
+	    START WITH 1
+	    INCREMENT BY 1
+	    NO MINVALUE
+	    NO MAXVALUE
+	    CACHE 1;
+	
+	
+	
+ERROR:  relation "value_types" already exists
+STATEMENT:  CREATE TABLE value_types (
+	    id integer NOT NULL,
+	    name text NOT NULL,
+	    details text,
+	    unit text
+	);
+	
+	
+	
+ERROR:  relation "value_types_id_seq" already exists
+STATEMENT:  CREATE SEQUENCE value_types_id_seq
+	    START WITH 1
+	    INCREMENT BY 1
+	    NO MINVALUE
+	    NO MAXVALUE
+	    CACHE 1;
+	
+	
+	
+ERROR:  duplicate key value violates unique constraint "measurements_pkey"
+DETAIL:  Key (id)=(200) already exists.
+CONTEXT:  COPY measurements, line 1
+STATEMENT:  COPY measurements (id, station_id, value_type_id, measured_at, measured_value, active) FROM stdin;
+	
+ERROR:  duplicate key value violates unique constraint "unique_schema_migrations"
+DETAIL:  Key (version)=(20160228120618) already exists.
+CONTEXT:  COPY schema_migrations, line 1
+STATEMENT:  COPY schema_migrations (version) FROM stdin;
+	
+ERROR:  duplicate key value violates unique constraint "stations_pkey"
+DETAIL:  Key (id)=(1) already exists.
+CONTEXT:  COPY stations, line 1
+STATEMENT:  COPY stations (id, name, details, location) FROM stdin;
+	
+ERROR:  duplicate key value violates unique constraint "value_types_pkey"
+DETAIL:  Key (id)=(1) already exists.
+CONTEXT:  COPY value_types, line 1
+STATEMENT:  COPY value_types (id, name, details, unit) FROM stdin;
+	
+ERROR:  multiple primary keys for table "measurements" are not allowed
+STATEMENT:  ALTER TABLE ONLY measurements
+	    ADD CONSTRAINT measurements_pkey PRIMARY KEY (id);
+	
+	
+	
+ERROR:  multiple primary keys for table "stations" are not allowed
+STATEMENT:  ALTER TABLE ONLY stations
+	    ADD CONSTRAINT stations_pkey PRIMARY KEY (id);
+	
+	
+	
+ERROR:  multiple primary keys for table "value_types" are not allowed
+STATEMENT:  ALTER TABLE ONLY value_types
+	    ADD CONSTRAINT value_types_pkey PRIMARY KEY (id);
+	
+	
+	
+ERROR:  relation "measurements_active_index" already exists
+STATEMENT:  CREATE INDEX measurements_active_index ON measurements USING btree (active);
+	
+	
+	
+ERROR:  relation "measurements_id_index" already exists
+STATEMENT:  CREATE INDEX measurements_id_index ON measurements USING btree (id);
+	
+	
+	
+ERROR:  relation "unique_schema_migrations" already exists
+STATEMENT:  CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
+	
+	
+	
+ERROR:  constraint "fk_rails_176b39e034" for relation "measurements" already exists
+STATEMENT:  ALTER TABLE ONLY measurements
+	    ADD CONSTRAINT fk_rails_176b39e034 FOREIGN KEY (station_id) REFERENCES stations(id);
+	
+	
+	
+ERROR:  constraint "fk_rails_6f094b1b25" for relation "measurements" already exists
+STATEMENT:  ALTER TABLE ONLY measurements
+	    ADD CONSTRAINT fk_rails_6f094b1b25 FOREIGN KEY (value_type_id) REFERENCES value_types(id);
+	
+	
+	
+WARNING:  no privileges could be revoked for "public"
+WARNING:  no privileges could be revoked for "public"
+WARNING:  no privileges were granted for "public"
+WARNING:  no privileges were granted for "public"
+ERROR:  database "CMSTS_development" is being accessed by other users
+DETAIL:  There is 1 other session using the database.
+STATEMENT:  DROP DATABASE IF EXISTS "CMSTS_development"
+ERROR:  must be owner of extension plpgsql
+STATEMENT:  COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+	
+	
+	
+WARNING:  no privileges could be revoked for "public"
+WARNING:  no privileges could be revoked for "public"
+WARNING:  no privileges were granted for "public"
+WARNING:  no privileges were granted for "public"
+ERROR:  column "measured_in_milliseconds" does not exist at character 39
+STATEMENT:  SELECT  "measurements"."measured_at", measured_in_milliseconds FROM "measurements" WHERE "measurements"."station_id" = $1 AND "measurements"."value_type_id" = $2  ORDER BY "measurements"."measured_at" ASC LIMIT 19
+ERROR:  duplicate key value violates unique constraint "stations_pkey"
+DETAIL:  Key (id)=(1) already exists.
+STATEMENT:  INSERT INTO "stations" ("name", "details", "location") VALUES ($1, $2, $3) RETURNING "id"
+ERROR:  canceling statement due to user request
+STATEMENT:  Select * from measurements where value_type_id=2
+ERROR:  canceling statement due to user request
+STATEMENT:  SELECT * FROM public.measurements
+	 ORDER BY id DESC
+ERROR:  canceling statement due to user request
+STATEMENT:  SELECT * FROM public.measurements
+	 ORDER BY id ASC
+ERROR:  missing FROM-clause entry for table "measurements" at character 49
+STATEMENT:  SELECT "value_types".* FROM "value_types" WHERE "measurements"."station" = 1
+ERROR:  missing FROM-clause entry for table "measurements" at character 49
+STATEMENT:  SELECT "value_types".* FROM "value_types" WHERE "measurements"."station_id" = 1
+ERROR:  missing FROM-clause entry for table "measurements" at character 49
+STATEMENT:  SELECT "value_types".* FROM "value_types" WHERE "measurements"."station_id" = 1
+ERROR:  missing FROM-clause entry for table "measurements" at character 49
+STATEMENT:  SELECT "value_types".* FROM "value_types" WHERE "measurements"."station_id" = $1
+ERROR:  column value_types.station_id does not exist at character 49
+STATEMENT:  SELECT "value_types".* FROM "value_types" WHERE "value_types"."station_id" = $1
+ERROR:  column value_types.station_id does not exist at character 49
+STATEMENT:  SELECT "value_types".* FROM "value_types" WHERE "value_types"."station_id" = $1
+ERROR:  there is no parameter $1 at character 126
+STATEMENT:  SELECT "measurements"."measured_at", "measurements"."measured_value" FROM "measurements" WHERE "measurements"."station_id" = $1 AND "measurements"."value_type_id" = $2 AND (measured_at BETWEEN '1970-01-16 06:25:48.000000' AND '1970-01-17 20:41:13.000000')  ORDER BY "measurements"."measured_at" ASC 
+LOG:  received smart shutdown request
+LOG:  autovacuum launcher shutting down
+LOG:  shutting down
+LOG:  database system is shut down
