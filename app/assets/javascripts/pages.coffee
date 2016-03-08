@@ -58,6 +58,8 @@ $(document).ready ->
 $(document).ready ->
   $('#chart-container').highcharts 'StockChart',
     rangeSelector: selected: 4
+    lang:
+      noData: "Please select a timeserie"
     yAxis:
       plotLines: [ {
         value: 0
@@ -70,7 +72,7 @@ $(document).ready ->
       allowDecimals: false
     tooltip:
       pointFormat: '{series.options.station_name}: <span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({series.options.unit})<br/>'
-      valueDecimals: 3
+      valueDecimals: 1
     series: []
   return
 
