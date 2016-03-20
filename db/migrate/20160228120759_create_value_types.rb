@@ -4,7 +4,6 @@ class CreateValueTypes < ActiveRecord::Migration
       t.text :name
       t.text :details
       t.text :unit
-
     end
   end
 end

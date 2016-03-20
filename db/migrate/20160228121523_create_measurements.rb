@@ -1,7 +1,7 @@
 class CreateMeasurements < ActiveRecord::Migration
   def change
     create_table :measurements, :id => false do |t|
-      t.column :id, :serial8, primary_key: true
+      t.column :id, :serial8
       t.references :station
       t.references :value_type
       t.timestamp :measured_at
